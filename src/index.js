@@ -73,7 +73,7 @@ app.post('/login', async(req, res) => {
     const output = {
         success: false,
         error: '',
-        postData: req.body,
+        userData: null,
     };
     if (!req.body.account || !req.body.password) {
         output.error = '欄位資料不足';
@@ -93,6 +93,7 @@ app.post('/login', async(req, res) => {
             account: rs[0].account,
         };
         output.success = true;
+        output.userData = rs;
     } else {
         output.error = '密碼錯誤';
     }
