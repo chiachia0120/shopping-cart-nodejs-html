@@ -1,0 +1,78 @@
+<%- include('parts/html-head') %>
+
+    <body class="sub_page d-flex flex-column min-vh-100">
+        <div class="hero_area">
+            <%- include('parts/menu') %>
+        </div>
+
+
+        <!-- content section -->
+        <section class="car_section layout_padding">
+            <div class="container">
+                <div class="heading_container">
+                    <h3>
+                        商品列表
+                    </h3>
+                    <hr>
+                </div>
+                <div class="layout_padding">
+                    <div class="row">
+                        <!-- 商品01 -->
+                        <% for(let p of rs){ %>
+                            <div class="plist col-md-6">
+                                <div class="img-box">
+                                    <img src="images/<%= p.product_image %>" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <div type="submit" class="btn-like addToCartBtn" data-sid="<%= p.product_id %>">
+                                        <i class="fas fa-cart-plus "></i> 加入購物車
+                                    </div>
+                                    <div type="submit" class="btn-like addToCartBtn" data-sid="<%= p.product_id %>">
+                                        <i class="fas fa-heart"></i> 加入最愛
+                                    </div>
+                                    <div class="detail_text">
+                                        <div class="name">
+                                            <h4>
+                                                <%= p.product_name %>
+                                            </h4>
+                                        </div>
+                                        <div class="price">
+                                            <h4>
+                                                <span>
+                                                $
+                                            </span>
+                                                <%= p.product_price %>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                                <!-- 商品01 end -->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- end about section -->
+        <%- include('parts/html-js') %>
+
+            <script>
+                const cartBtns = $('.addToCartBtn');
+
+                cartBtns.on('click', function(event) {
+                    const me = $(this);
+                    const pk = me.attr('data-sid');
+
+                    $.post('/cart/add', {
+                        pk: pk,
+                        qty: 1
+                    }, function(data) {
+                        console.log(data);
+                    }, 'json');
+                });
+            </script>
+            <%- include('parts/footer') %>
+    </body>

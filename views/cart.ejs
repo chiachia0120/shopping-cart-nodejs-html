@@ -1,0 +1,110 @@
+<%- include('parts/html-head') %>
+    <%- include('parts/menu') %>
+        <section class="cart_section layout_padding">
+            <div class="container">
+                <div class="heading_container py-md-2 pt-md-2">
+                    <h2>
+                        Shopping Cart
+                    </h2>
+                </div>
+                <% if(! cart.length){ %>
+                    <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
+                        <p>您的購物車沒有商品</p>
+                        <a href="/product" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >前往購買</button></a>
+                    </div>
+                    <% } else { %>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">圖片</th>
+                                    <th scope="col">商品名稱</th>
+                                    <th scope="col">數量</th>
+                                    <th scope="col">價格</th>
+                                    <th scope="col">刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody onsubmit="checkOut(); return false;" name="checkout">
+                                <% for(let c of cart){ %>
+                                    <tr data-sid="<%= c.product_id %>" label for="id">
+                                        <td>
+                                            <img src="images/<%= c.product_image %>" alt="..." height="100">
+                                        </td>
+                                        <td label for="name">
+                                            <%= c.product_name %>
+                                        </td>
+                                        <td>
+                                            <select class="form-control quantity" label for="quantity" data-val="<%= c.quantity %>">
+                            <% for(let i=1; i<=10; i++){ %>
+                            <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                                        </td>
+                                        <td>
+                                            <span label for="price"><%= c.product_price * c.quantity %></span>
+
+                                        </td>
+
+                                        <td>
+                                            <a href="/delete/ <%= c.product_id %>"><i class="fas fa-trash-alt"></i></a>
+                                            <i class="fas fa-trash-alt"></i></td>
+                                    </tr>
+                                    <% } %>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary ">結帳</button>
+                                            <div id="info" class="alert alert-success" role="alert" style="display: none">
+                                            </div>
+                                        </td>
+                            </tbody>
+                        </table>
+                        <% } %>
+            </div>
+        </section>
+        <%- include('parts/html-js') %>
+            <script>
+                const combo = $('.quantity');
+
+                // 把設定在 data-val 的值設定給 combobox
+                combo.each(function() {
+                    $(this).val($(this).attr('data-val'));
+                });
+
+                combo.on('change', function(event) {
+                    const me = $(this);
+                    const qty = me.val();
+                    const pk = me.closest('tr').attr('data-sid');
+
+                    $.post('/cart/add', {
+                        pk,
+                        qty
+                    }, function(data) {
+                        location.reload();
+                    }, 'json');
+                });
+
+
+
+                // 結帳start
+                const info = $('#info');
+
+                function checkOut() {
+                    $.post('/cart/checkout', $(document.checkOut).serialize(), function(data) {
+                        console.log('hi');
+                        if (data.success) {
+                            setTimeout(function() {
+                                location.href = '/checkout';
+                            }, 3000);
+                        } else {
+                            info.removeClass('alert-success').addClass('alert-danger');
+                            info.html(data.error);
+                            info.slideDown();
+                            setTimeout(function() {
+                                info.slideUp(); // 上捲後隱藏
+                            }, 3000);
+                        }
+                    }, 'json');
+                    return false;
+                }
+                // 結帳end
+            </script>
+
+            <%- include('parts/footer') %>

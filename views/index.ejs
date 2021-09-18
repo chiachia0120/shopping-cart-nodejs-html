@@ -1,0 +1,96 @@
+<%- include('parts/html-head') %>
+
+    <body class="d-flex flex-column min-vh-100" id="page-top">
+        <div class="hero_area">
+            <%- include('parts/menu') %>
+                <%- include('parts/slider') %>
+        </div>
+        <!-- car section -->
+
+        <!-- 商品01 -->
+        <!-- <% for(let p of rs){ %>
+                            <div class="plist col-md-6">
+                                <div class="img-box">
+                                    <a href="/product"><img src="images/<%= p.product_image %>" alt=""></a>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="btn-box">
+                                        <a href="/cart">
+                                        加入購物車
+                                    </a>
+                                    </div>
+                                    <div class="btn-like">
+                                        <a href="">
+                                            <i class="fas fa-heart"></i> 加入最愛
+                                        </a>
+                                    </div>
+                                    <div class="detail_text">
+                                        <div class="name">
+                                            <h4>
+                                                <%= p.product_name %>
+                                            </h4>
+                                        </div>
+                                        <div class="price">
+                                            <h4>
+                                                <span>
+                                                $
+                                            </span>
+                                                <%= p.product_price %>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %> -->
+        <!-- 商品01 end -->
+
+        </div>
+        </div>
+        </div>
+        </section>
+        <!-- end car section -->
+
+        <!-- special section -->
+
+        <div class="container-fluid">
+            <section class="page-section" id="team">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class=" text-uppercase"></h2>
+                        <h3 class="allword">客人回饋</h3>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="team-member">
+
+                                <img class="mx-auto rounded-circle" src="img/pro1.jpeg" alt="..." />
+                                <h4>Congee</h4>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+                            <div class="team-member">
+                                <img class="mx-auto rounded-circle" src="img/P4.png" alt="..." />
+                                <h4>Noodles</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="team-member">
+                                <img class="mx-auto rounded-circle" src="img/P5.png" alt="..." />
+                                <h4>Brownie</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <!-- end special section -->
+
+            <%- include('parts/footer') %>
+                <%- include('parts/html-js') %>
+    </body>
+
+    </html>

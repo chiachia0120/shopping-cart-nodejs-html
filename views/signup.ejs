@@ -1,0 +1,151 @@
+<%- include('parts/html-head') %>
+
+    <body class="sub_page d-flex flex-column min-vh-100">
+        <div class="hero_area">
+            <%- include('parts/menu') %>
+        </div>
+
+
+        <!-- content section -->
+        <section class="product_section layout_padding">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="heading_container mb-5">
+                            <h2>
+                                註冊
+                            </h2>
+                            <hr>
+                        </div>
+
+                        <form name="signup_form" id="signup_form" onsubmit="checkForm(); return false;">
+
+                            <div class="form-group">
+                                <label for="account">帳號</label>
+                                <input type="account" class="form-control" id="account" name="account" placeholder="Username" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">會員密碼(6碼至15碼英數字)</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password2">再次輸入密碼</label>
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat Your Password " required>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">姓名</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">手機</label>
+                                <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}">
+                            </div>
+                            <div id="info" class="alert alert-success" role="alert" style="display: none">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">加入會員</button>
+                        </form>
+                    </div>
+                    <!-- col-6 end -->
+                </div>
+                <!-- row -->
+            </div>
+        </section>
+        <!-- end content section -->
+
+        <%- include('parts/footer') %>
+            <%- include('parts/html-js') %>
+                <script>
+                    const info = $('#info');
+
+                    function checkForm() {
+                        $.post('', $(document.signup_form).serialize(), function(data) {
+                            console.log('hi');
+                            if (data.success) {
+                                info.removeClass('alert-danger').addClass('alert-success');
+                                info.html('註冊成功');
+                                info.slideDown(); // 下拉顯示
+                                // 新增成功後回到首頁
+                                setTimeout(function() {
+                                    location.href = '/';
+                                }, 3000);
+                            } else {
+                                info.removeClass('alert-success').addClass('alert-danger');
+                                info.html(data.error);
+                                info.slideDown();
+                                setTimeout(function() {
+                                    info.slideUp(); // 上捲後隱藏
+                                }, 3000);
+                            }
+                        }, 'json');
+                        return false;
+                    }
+                </script>
+    </body>
+
+    </html>
+
+
+
+
+    <div class="wrap">
+
+
+
+
+
+        <!-- <div id="app-login" class="modal modal--login"><button title="Close (Esc)" type="button" onclick="history.back()" class="mfp-close">×</button>
+            <div class="modal__title">
+                <h1 class="header__logo"><a href="/">MEIER.Q</a></h1>
+                <h1 class="mb-2">Sign In or Register</h1>
+                <p class="h5">會員登入 / 加入會員</p>
+            </div>
+            <div class="modal--login__login lh-2 h6">
+                <div class="modal__header">
+                    <h2 class="mb-3">Registered Customers</h2>
+                </div>
+                <div class="modal__content">
+                    <p class="small-text">If you are the memberof MEIER.Q already, please log in to track your orders, view personal account and more.</p>
+                    <p class="mb-4">如果您已經成為會員，那麼只要登入即可快速查看訂單、修改個人帳戶及使用更多功能。</p>
+                    <div class="mb-3"></div>
+                    <form id="form-user-login" action="/login" method="POST" novalidate="novalidate"><input name="__RequestVerificationToken" type="hidden" value="Xn-Ka-N5v1toP8ViE8ddNXa6V5lMtZfmBaZHL-4FyZj7KrMRf4vMujOXdmiQbCC5qDBv8oQHaT09tOFEKhIagzj1haQLMKijzB5CWgsB0dw1">
+                        <ul class="formstyle formstyle--darken formstyle--vt">
+                            <li><label for="loginAccount" class="h2 title">Email Address/Account<span class="ml-2 h6">電子信箱/帳號</span></label> <input id="loginAccount" type="text" placeholder="" name="account" class="text text--l valid" aria-invalid="false"></li>
+                            <li><label for="loginPassword" class="h2 title">Password<span class="ml-2 h6">會員密碼</span></label> <input id="loginPassword" type="password" placeholder="" name="password" class="text text--l"></li>
+                        </ul>
+                        <ul class="other mb-5">
+                            <li>
+                                <h4 class="title-en">Forgot your Password?</h4> <a href="#" class="btn-forgot-password">忘記密碼？</a></li>
+                        </ul> <input type="submit" value="會員登入" class="btn btn-submit"></form>
+                </div>
+            </div>
+            <div class="modal--login__register lh-2 h6">
+                <div class="modal__header">
+                    <h2 class="mb-3">Register</h2>
+                </div>
+                <div class="modal__content">
+                    <form id="form-register" action="/signup" method="POST" novalidate="novalidate"><input name="__RequestVerificationToken" type="hidden" value="Xn-Ka-N5v1toP8ViE8ddNXa6V5lMtZfmBaZHL-4FyZj7KrMRf4vMujOXdmiQbCC5qDBv8oQHaT09tOFEKhIagzj1haQLMKijzB5CWgsB0dw1">
+                        <ul class="formstyle formstyle--darken formstyle--vt mb-5">
+                            <li><label for="loginAccount" class="h2 title">Email Address/Account<span class="ml-2 h6">電子信箱/帳號</span></label> <input id="registerUsername" type="text" placeholder="" name="account" class="text text--l valid" aria-invalid="false"></li>
+                            <li><label for="loginPassword" class="h2 title">Password<span class="ml-2 h6">會員密碼(6碼至15碼英數字)</span></label> <input id="registerPwd" type="password" placeholder="" name="password" class="text text--l text-danger" aria-describedby="registerPwd-error"
+                                    aria-invalid="true">
+                                <div id="registerPwd-error" class="text-danger">This field is required.</div>
+                            </li>
+                            <li><label for="loginPassword" class="h2 title">Password Again <span class="ml-2 h6">再次輸入密碼</span></label> <input id="registerPwdAgain" type="password" placeholder="" name="checkpassword" class="text text--l"></li>
+                        </ul> <input type="submit" value="SIGN UP" class="btn btn-submit"></form>
+                </div>
+            </div>
+            <div class="modal--login__forgot lh-2 h6 d-none">
+                <div class="modal__header">
+                    <h2 class="mb-3">Forgot Password</h2>
+                    <p class="h5">忘記密碼</p>
+                </div>
+                <div class="modal__content">
+                    <form id="form-user-forgot" action="" novalidate="novalidate">
+                        <ul class="formstyle formstyle--darken formstyle--vt mb-5">
+                            <li><label for="loginAccount" class="h2 title">Email Address/Account<span class="ml-2 h6">電子信箱/帳號</span></label><input id="forgotAccount" type="text" placeholder="" name="account" class="text text--l"></li>
+                        </ul><input type="submit" value="提交" class="btn btn-submit"><a href="#" class="btn-back btn ml-md-2">返回</a></form>
+                </div>
+            </div>
+        </div> -->

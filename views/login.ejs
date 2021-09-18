@@ -1,0 +1,74 @@
+<%- include('parts/html-head') %>
+
+    <body class="sub_page d-flex flex-column min-vh-100">
+        <div class="hero_area">
+            <%- include('parts/menu') %>
+        </div>
+
+
+        <!-- content section -->
+        <div class="py-5">
+            <div class="row">
+                <section class="product_section layout_padding col-md-12">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-6">
+                                <div class="heading_container mb-5">
+                                    <h2>
+                                        登入
+                                    </h2>
+                                </div>
+
+                                <form name="login_form" onsubmit="checkForm(); return false;">
+                                    <div class="form-group">
+                                        <label for="account">帳號</label>
+                                        <input type="text" class="form-control" id="account" name="account">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">密碼</label>
+                                        <input type="password" class="form-control" id="password" name="password">
+                                    </div>
+                                    <div id="info" class="alert alert-success" role="alert" style="display: none"></div>
+                                    <button type="submit" class="btn btn-primary">登入</button>
+                                </form>
+                            </div>
+                            <!-- col-6 end -->
+                        </div>
+                        <!-- row -->
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        </section>
+
+
+        <!-- end about section -->
+        <%- include('parts/footer') %>
+            <%- include('parts/html-js') %>
+                <script>
+                    const info = $('#info');
+
+                    function checkForm() {
+                        $.post('', $(document.login_form).serialize(), function(data) {
+                            if (data.success) {
+                                info.removeClass('alert-danger').addClass('alert-success');
+                                info.html('登入成功');
+                                info.slideDown(); // 下拉顯示
+                                // 新增成功後回到首頁
+                                setTimeout(function() {
+                                    location.href = '/product';
+                                }, 1000);
+                            } else {
+                                info.removeClass('alert-danger').addClass('alert-success');
+                                info.html('帳號或密碼錯誤');
+                                info.slideDown();
+                            }
+                        }, 'json');
+                        return false;
+                    }
+                </script>
+
+    </body>
+
+    </html>
