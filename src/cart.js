@@ -63,9 +63,19 @@ app.get('/cart', async(req, res) => {
     res.render('cart', { cart: req.session.cart });
 });
 
-app.get('/cart/delete', async(req, res) => {
-    delete req.session.cart;
-    res.redirect('/cart');
+app.post('/cart/delete', async(req, res) => {
+    let cart = req.session.cart;
+    let pid = req.body.product_id;
+    req.session.cart = cart.filter(el => el.product_id != pid);
+    const output = {
+        success: true,
+        error: '',
+        code: 0, // 追踪程式走到哪
+        cart: req.session.cart,
+        postData: req.body,
+    };
+
+    return res.json(output);
 });
 
 

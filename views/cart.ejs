@@ -128,7 +128,11 @@
                 //delete start
                 function delete_it(product_id) {
                     if (confirm(`是否要刪除編號為 ${product_id} 的資料?`)) {
-                        location.href = "/cart/delete";
+                        $.post('/cart/delete', {
+                            product_id,
+                        }, function(data) {
+                            location.reload();
+                        }, 'json');
                     }
                 }
                 //delete end
