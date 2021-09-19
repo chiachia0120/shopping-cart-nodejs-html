@@ -66,7 +66,7 @@
                         </select>
                                 </td>
                                 <td>
-                                    <span label for="price"><%= c.product_price * c.quantity %></span>
+                                    <span class="price"><%= c.product_price * c.quantity %></span>
 
                                 </td>
 
@@ -87,14 +87,10 @@
                         <div class="col-lg-10 col-12">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">繼續選購</button></a> </div>
-                                <% for(let c of cart){ %>
-                                    <div class="px-md-0 px-1" id="footer-font">
-                                        <b class="pl-md-4">共 <%= c.quantity %>件商品, 總金額  <%= c.product_price * c.quantity %>  元<span class="pl-md-4">
-                                                </span>
-                                            </b>
-                                    </div>
-                                    <% } %>
-                                        <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
+                                <div class="px-md-0 px-1" id="footer-font">
+                                    <b class="pl-md-4" id="subtotal"></b>
+                                </div>
+                                <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
                             </div>
                         </div>
                     </div>
@@ -163,6 +159,16 @@
 
 
                 // 結帳end
+                //計算金額
+                let qtys = $(".quantity").length
+                let total_price = 0;
+                for (let i = 0; i < qtys; i++) {
+                    let p = document.querySelectorAll('.price')[i].textContent
+                    total_price += parseInt(p)
+                }
+                console.log(total_price)
+                document.querySelector('#subtotal').textContent = `總金額 ${total_price} 元`
+                    //計算end
             </script>
 
             <%- include('parts/footer') %>
