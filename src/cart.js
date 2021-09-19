@@ -63,6 +63,10 @@ app.get('/cart', async(req, res) => {
     res.render('cart', { cart: req.session.cart });
 });
 
+app.get('/cart/delete', async(req, res) => {
+    delete req.session.cart;
+    res.redirect('/cart');
+});
 
 
 app.post('/cart/checkout', async(req, res) => {

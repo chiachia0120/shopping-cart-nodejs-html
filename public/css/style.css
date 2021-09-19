@@ -700,21 +700,6 @@ a:focus {
     color: #f9fcfb;
 } */
 
-.scroll-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 15px;
-    color: #fff;
-    background-color: rgba(0, 0, 0, .6);
-    z-index: 4;
-    text-align: center;
-    width: 3.75rem;
-    height: 3.75rem;
-    line-height: 3.75rem;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
 .basic-fade-enter-done {
     opacity: .6;
     transition: opacity .5s ease;
@@ -730,6 +715,12 @@ a:focus {
 
 .allword {
     color: #BC9272
+}
+
+.allword a {
+    color: #BC9272;
+    font-weight: bold;
+    font-size: large;
 }
 
 .checkout-nav {

@@ -51,7 +51,7 @@
                     </thead>
                     <tbody>
                         <% for(let c of cart){ %>
-                            <tr data-sid="<%= c.product_id %>" label for="id">
+                            <tr data-product_id="<%= c.product_id %>" label for="id">
                                 <td>
                                     <img src="images/<%= c.product_image %>" alt="..." height="100">
                                 </td>
@@ -71,34 +71,38 @@
                                 </td>
 
                                 <td>
-                                    <a href="/delete/ <%= c.product_id %>"><i class="fas fa-trash-alt"></i></a>
-                                    <i class="fas fa-trash-alt"></i></td>
+                                    <a href="javascript: delete_it(<%= c.product_id %>)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <% } %>
+
                     </tbody>
                 </table>
-                <% } %>
-
-                    <div id="info" class="alert alert-success" role="alert" style="display: none">
-                    </div>
-                    <div class="container bg-light rounded-bottom py-4" id="zero-pad">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-lg-10 col-12">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">繼續選購</button></a> </div>
-                                    <% for(let c of cart){ %>
-                                        <div class="px-md-0 px-1" id="footer-font">
-                                            <b class="pl-md-4">共 <%= c.quantity %>件商品, 總金額  <%= c.product_price * c.quantity %>  元<span class="pl-md-4">
-                                                    </span>
-                                                </b>
-                                        </div>
-                                        <% } %>
-                                            <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
-                                </div>
+                <div id="info" class="alert alert-success" role="alert" style="display: none">
+                </div>
+                <div class="container bg-light rounded-bottom py-4" id="zero-pad">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-10 col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">繼續選購</button></a> </div>
+                                <% for(let c of cart){ %>
+                                    <div class="px-md-0 px-1" id="footer-font">
+                                        <b class="pl-md-4">共 <%= c.quantity %>件商品, 總金額  <%= c.product_price * c.quantity %>  元<span class="pl-md-4">
+                                                </span>
+                                            </b>
+                                    </div>
+                                    <% } %>
+                                        <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <% } %>
                     <% } %>
+
+
         </section>
         <%- include('parts/html-js') %>
             <script>
@@ -111,7 +115,7 @@
                 combo.on('change', function(event) {
                     const me = $(this);
                     const qty = me.val();
-                    const pk = me.closest('tr').attr('data-sid');
+                    const pk = me.closest('tr').attr('data-product_id');
 
                     $.post('/cart/add', {
                         pk,
@@ -121,7 +125,13 @@
                     }, 'json');
                 });
 
-
+                //delete start
+                function delete_it(product_id) {
+                    if (confirm(`是否要刪除編號為 ${product_id} 的資料?`)) {
+                        location.href = "/cart/delete";
+                    }
+                }
+                //delete end
 
                 // 結帳start
                 const info = $('#info');
@@ -146,6 +156,8 @@
                     }, 'json');
                     return false;
                 }
+
+
                 // 結帳end
             </script>
 
