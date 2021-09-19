@@ -109,6 +109,11 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/checkout', (req, res) => {
+    res.render('checkout');
+});
+
+
 
 app.get('/signup', (req, res) => {
     res.render('signup');

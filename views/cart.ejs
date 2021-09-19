@@ -8,70 +8,80 @@
                     </h2>
                 </div>
                 <% if(! cart.length){ %>
-                    <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
-                        <p>您的購物車沒有商品</p>
-                        <a href="/product" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >前往購買</button></a>
+                    <div class="pb-5 text-center container">
+                        <div class="card">
+                            <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
+                                <p>您的購物車沒有商品</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <div class="row">
+                                <a href="/product" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >前往購買</button></a></div>
+                        </div>
                     </div>
-                    <% } else { %>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">圖片</th>
-                                    <th scope="col">商品名稱</th>
-                                    <th scope="col">數量</th>
-                                    <th scope="col">價格</th>
-                                    <th scope="col">刪除</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% for(let c of cart){ %>
-                                    <tr data-sid="<%= c.product_id %>" label for="id">
-                                        <td>
-                                            <img src="images/<%= c.product_image %>" alt="..." height="100">
-                                        </td>
-                                        <td label for="name">
-                                            <%= c.product_name %>
-                                        </td>
-                                        <td>
-                                            <select class="form-control quantity" label for="quantity" data-val="<%= c.quantity %>">
+            </div>
+
+            <% } else { %>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">圖片</th>
+                            <th scope="col">商品名稱</th>
+                            <th scope="col">數量</th>
+                            <th scope="col">價格</th>
+                            <th scope="col">刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let c of cart){ %>
+                            <tr data-sid="<%= c.product_id %>" label for="id">
+                                <td>
+                                    <img src="images/<%= c.product_image %>" alt="..." height="100">
+                                </td>
+                                <td label for="name">
+                                    <%= c.product_name %>
+                                </td>
+                                <td>
+                                    <select class="form-control quantity" label for="quantity" data-val="<%= c.quantity %>">
                             <% for(let i=1; i<=10; i++){ %>
                             <option value="<%= i %>"><%= i %></option>
                             <% } %>
                         </select>
-                                        </td>
-                                        <td>
-                                            <span label for="price"><%= c.product_price * c.quantity %></span>
+                                </td>
+                                <td>
+                                    <span label for="price"><%= c.product_price * c.quantity %></span>
 
-                                        </td>
+                                </td>
 
-                                        <td>
-                                            <a href="/delete/ <%= c.product_id %>"><i class="fas fa-trash-alt"></i></a>
-                                            <i class="fas fa-trash-alt"></i></td>
-                                    </tr>
-                                    <% } %>
-                            </tbody>
-                        </table>
-                        <% } %>
+                                <td>
+                                    <a href="/delete/ <%= c.product_id %>"><i class="fas fa-trash-alt"></i></a>
+                                    <i class="fas fa-trash-alt"></i></td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+                <% } %>
 
-                            <div id="info" class="alert alert-success" role="alert" style="display: none">
-                            </div>
-                            <div class="container bg-light rounded-bottom py-4" id="zero-pad">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-lg-10 col-12">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">GO BACK</button></a> </div>
-                                            <% for(let c of cart){ %>
-                                                <div class="px-md-0 px-1" id="footer-font">
-                                                    <b class="pl-md-4"><%= c.product_price * c.quantity %><span class="pl-md-4">
+                    <div id="info" class="alert alert-success" role="alert" style="display: none">
+                    </div>
+                    <div class="container bg-light rounded-bottom py-4" id="zero-pad">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-10 col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">GO BACK</button></a> </div>
+                                    <% for(let c of cart){ %>
+                                        <div class="px-md-0 px-1" id="footer-font">
+                                            <b class="pl-md-4"><%= c.product_price * c.quantity %><span class="pl-md-4">
                                                     </span>
                                                 </b>
-                                                </div>
-                                                <% } %>
-                                                    <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
                                         </div>
-                                    </div>
+                                        <% } %>
+                                            <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
         </section>
         <%- include('parts/html-js') %>

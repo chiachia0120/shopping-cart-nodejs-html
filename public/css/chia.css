@@ -210,7 +210,49 @@ footer p {
     width: 100%;
 }
 
+.card {
+    position: relative;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    -webkit-border-radius: .25rem;
+    border-radius: .25rem;
+}
+
 .card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.checkout {
+    position: relative;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    -webkit-border-radius: .25rem;
+    border-radius: .25rem;
+}
+
+.checkout-body {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem;
