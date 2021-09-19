@@ -88,6 +88,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">繼續選購</button></a> </div>
                                 <div class="px-md-0 px-1" id="footer-font">
+                                    <b class="pl-md-4" id="subq"></b>
                                     <b class="pl-md-4" id="subtotal"></b>
                                 </div>
                                 <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
@@ -166,9 +167,18 @@
                     let p = document.querySelectorAll('.price')[i].textContent
                     total_price += parseInt(p)
                 }
+
                 console.log(total_price)
                 document.querySelector('#subtotal').textContent = `總金額 ${total_price} 元`
                     //計算end
+
+                let total_quantity = 0;
+                for (let d = 0; d < qtys; d++) {
+                    let n = document.querySelectorAll('.quantity')[d].value
+                    total_quantity += parseInt(n)
+                    console.log(n)
+                    document.querySelector('#subq').textContent = `共 ${total_quantity} 件商品,`
+                }
             </script>
 
             <%- include('parts/footer') %>
