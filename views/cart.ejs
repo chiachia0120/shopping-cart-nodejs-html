@@ -23,7 +23,7 @@
                                     <th scope="col">刪除</th>
                                 </tr>
                             </thead>
-                            <tbody onsubmit="checkOut(); return false;" name="checkout">
+                            <tbody>
                                 <% for(let c of cart){ %>
                                     <tr data-sid="<%= c.product_id %>" label for="id">
                                         <td>
@@ -49,20 +49,34 @@
                                             <i class="fas fa-trash-alt"></i></td>
                                     </tr>
                                     <% } %>
-                                        <td>
-                                            <button type="submit" class="btn btn-primary ">結帳</button>
-                                            <div id="info" class="alert alert-success" role="alert" style="display: none">
-                                            </div>
-                                        </td>
                             </tbody>
                         </table>
                         <% } %>
-            </div>
+
+                            <div id="info" class="alert alert-success" role="alert" style="display: none">
+                            </div>
+                            <div class="container bg-light rounded-bottom py-4" id="zero-pad">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-lg-10 col-12">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">GO BACK</button></a> </div>
+                                            <% for(let c of cart){ %>
+                                                <div class="px-md-0 px-1" id="footer-font">
+                                                    <b class="pl-md-4"><%= c.product_price * c.quantity %><span class="pl-md-4">
+                                                    </span>
+                                                </b>
+                                                </div>
+                                                <% } %>
+                                                    <div> <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" onclick="checkOut()">結帳</button> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
         </section>
         <%- include('parts/html-js') %>
             <script>
                 const combo = $('.quantity');
-
                 // 把設定在 data-val 的值設定給 combobox
                 combo.each(function() {
                     $(this).val($(this).attr('data-val'));
@@ -87,19 +101,21 @@
                 const info = $('#info');
 
                 function checkOut() {
-                    $.post('/cart/checkout', $(document.checkOut).serialize(), function(data) {
-                        console.log('hi');
+                    console.log('hi');
+                    $.post('/cart/checkout', function(data) {
                         if (data.success) {
                             setTimeout(function() {
                                 location.href = '/checkout';
                             }, 3000);
                         } else {
-                            info.removeClass('alert-success').addClass('alert-danger');
-                            info.html(data.error);
-                            info.slideDown();
-                            setTimeout(function() {
-                                info.slideUp(); // 上捲後隱藏
-                            }, 3000);
+                            alert("error");
+                            console.log(data)
+                                // info.removeClass('alert-success').addClass('alert-danger');
+                                // info.html(data.error);
+                                // info.slideDown();
+                                // setTimeout(function() {
+                                //     info.slideUp(); // 上捲後隱藏
+                                // }, 3000);
                         }
                     }, 'json');
                     return false;

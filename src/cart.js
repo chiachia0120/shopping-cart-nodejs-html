@@ -72,25 +72,25 @@ app.post('/cart/checkout', async(req, res) => {
         error: '',
         code: 0,
     };
-    let { order_id, product_id, price, quantity } = req.body;
+    let cart = req.session.cart;
+    let user_id = req.session.admin.id;
+
+    // return res.json({ user_id, product_id: cart[0].product_id, price: cart[0].product_price, q: cart[0].quantity })
 
     if (!cart.length) {
         output.error = '您沒有選擇商品';
         return res.json(output);
     }
-    const sql = `INSERT INTO ordertab
-    (order_id,
-    product_id,
-    price,
-    quantity)
-    VALUES (?,?,?,?);`;
+    const sql2 = `INSERT INTO ordertab
+                 (user_id, product_id, price, quantity)
+                VALUES (?,?,?,?);`;
 
     // 執行 SQL
-    const [result] = await db.query(sql, [order_id, product_id, price, quantity]);
+    const [result1] = await db.query(sql2, [user_id, cart[0].product_id, cart[0].product_price, cart[0].quantity]);
 
-    output.result = result;
+    output.result1 = result1;
 
-    if (result.affectedRows) {
+    if (result1.affectedRows) {
         output.success = true;
         return res.json(output); // 回傳output結果
     }

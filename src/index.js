@@ -91,6 +91,7 @@ app.post('/login', async(req, res) => {
     if (result) {
         req.session.admin = {
             account: rs[0].account,
+            id: rs[0].id
         };
         output.success = true;
         output.userData = rs;

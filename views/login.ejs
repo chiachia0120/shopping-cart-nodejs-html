@@ -52,6 +52,7 @@
                     function checkForm() {
                         $.post('', $(document.login_form).serialize(), function(data) {
                             if (data.success) {
+                                localStorage.setItem("login-id", data.userData[0].id)
                                 info.removeClass('alert-danger').addClass('alert-success');
                                 info.html('登入成功');
                                 info.slideDown(); // 下拉顯示
