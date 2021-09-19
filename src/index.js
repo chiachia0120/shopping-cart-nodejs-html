@@ -69,6 +69,7 @@ app.get('/privacy', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 });
+
 app.post('/login', async(req, res) => {
     const output = {
         success: false,
@@ -76,36 +77,35 @@ app.post('/login', async(req, res) => {
         userData: null,
     };
     if (!req.body.account || !req.body.password) {
-        output.error = '欄位資料不足';
+        output.error = '欄位資料不足1';
         return res.json(output);
     }
 
-    const sql = "SELECT * FROM admins WHERE account=?";
-    const [rs] = await db.query(sql, [req.body.account]);
-    if (!rs.length) {
-        output.error = '帳號錯誤';
+    const sql1 = "SELECT * FROM users WHERE account=?";
+    const [rs1] = await db.query(sql1, [req.body.account]);
+    if (!rs1.length) {
+        output.error = '帳號錯誤1';
         return res.json(output);
     }
 
-    const result = await bcrypt.compare(req.body.password, rs[0].password_hash);
-    if (result) {
-        req.session.admin = {
-            account: rs[0].account,
-            id: rs[0].id
+
+    if (req.body.password == rs1[0].password) {
+        req.session.user = {
+            account: rs1[0].account,
+            id: rs1[0].user_id
         };
         output.success = true;
-        output.userData = rs;
+        output.userData = rs1;
     } else {
-        output.error = '密碼錯誤';
+        output.error = '密碼錯誤1';
     }
 
     res.json(output);
 
-
 });
 
 app.get('/logout', (req, res) => {
-    delete req.session.admin;
+    delete req.session.user;
     res.redirect('/');
 });
 
