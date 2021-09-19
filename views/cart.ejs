@@ -7,19 +7,35 @@
                         Shopping Cart
                     </h2>
                 </div>
-                <% if(! cart.length){ %>
+                <% if(!session.user){ %>
                     <div class="pb-5 text-center container">
                         <div class="card">
                             <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
-                                <p>您的購物車沒有商品</p>
+                                <p>請先登入</p>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="row">
+                                    <a href="/login" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >立即登入</button></a></div>
                             </div>
                         </div>
-
-                        <div class="text-center mt-4">
-                            <div class="row">
-                                <a href="/product" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >前往購買</button></a></div>
-                        </div>
                     </div>
+
+                    <% } else { %>
+
+
+                        <% if(! cart.length){ %>
+                            <div class="pb-5 text-center container">
+                                <div class="card">
+                                    <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
+                                        <p>您的購物車沒有商品</p>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <div class="row">
+                                        <a href="/product" class="col-12 col-md-6 offset-md-3"><button class="btn btn-primary mt-4" >前往購買</button></a></div>
+                                </div>
+                            </div>
             </div>
 
             <% } else { %>
@@ -69,10 +85,10 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-10 col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">GO BACK</button></a> </div>
+                                    <div> <a href="/product"><button class="btn btn-sm bg-light border border-dark">繼續選購</button></a> </div>
                                     <% for(let c of cart){ %>
                                         <div class="px-md-0 px-1" id="footer-font">
-                                            <b class="pl-md-4"><%= c.product_price * c.quantity %><span class="pl-md-4">
+                                            <b class="pl-md-4">共 <%= c.quantity %>件商品, 總金額  <%= c.product_price * c.quantity %>  元<span class="pl-md-4">
                                                     </span>
                                                 </b>
                                         </div>
@@ -82,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <% } %>
         </section>
         <%- include('parts/html-js') %>
             <script>

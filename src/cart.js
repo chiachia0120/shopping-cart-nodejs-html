@@ -73,20 +73,20 @@ app.post('/cart/checkout', async(req, res) => {
         code: 0,
     };
     let cart = req.session.cart;
-    let user_id = req.session.admin.id;
+    let user_id = req.session.user.id;
 
-    // return res.json({ user_id, product_id: cart[0].product_id, price: cart[0].product_price, q: cart[0].quantity })
+    //return res.json({ user_id, product_id: cart[0].product_id, price: cart[0].product_price, q: cart[0].quantity })
 
     if (!cart.length) {
         output.error = '您沒有選擇商品';
         return res.json(output);
     }
-    const sql2 = `INSERT INTO ordertab
+    const sql = `INSERT INTO ordertab
                  (user_id, product_id, price, quantity)
                 VALUES (?,?,?,?);`;
 
     // 執行 SQL
-    const [result1] = await db.query(sql2, [user_id, cart[0].product_id, cart[0].product_price, cart[0].quantity]);
+    const [result1] = await db.query(sql, [user_id, cart[0].product_id, cart[0].product_price, cart[0].quantity]);
 
     output.result1 = result1;
 
