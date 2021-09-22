@@ -118,7 +118,7 @@ app.post('/delete', async(req, res) => {
         postData: req.body,
     };
 
-    const sql2 = "DELETE FROM `users` WHERE `account`=?";
+    const sql2 = "DELETE FROM `ordertab` WHERE `account`=?";
 
     const [result] = await db.query(sql2, [account]);
 
