@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.use(require(__dirname + '/cart'));
-
+app.use('/account', require(__dirname + '/account'));
 
 
 
@@ -104,9 +104,53 @@ app.post('/login', async(req, res) => {
 
 });
 
+
+
 app.get('/logout', (req, res) => {
     delete req.session.user;
     res.redirect('/');
+});
+
+app.post('/forgetpassword', async(req, res) => {
+    const output = {
+        success: false,
+        error: '',
+        code: 0, // 追踪程式走到哪
+        postData: req.body,
+    };
+
+    const sql4 = "SELECT * FROM users WHERE account=?";
+
+    const account = req.body.account;
+    const password = req.body.password;
+    const password2 = req.body.password2;
+
+
+    const [rs] = await db.query(sql4, [account]);
+    if (!rs) {
+        output.error = '查無帳號';
+        return res.json(output);
+    }
+
+    if (password != password2) {
+        output.error = '密碼錯誤';
+        return res.json(output);
+    }
+
+    const sql5 = `UPDATE \`users\` SET \`password\`=?  WHERE account=?`;
+
+    const [result] = await db.query(sql5, [password, account]);
+
+    output.result = result;
+    if (result.affectedRows) {
+        if (result.changedRows) {
+            output.success = true;
+        } else {
+            output.error = '資料沒有變更';
+        }
+    }
+
+    res.json(output);
 });
 
 app.get('/checkout', (req, res) => {
@@ -114,6 +158,9 @@ app.get('/checkout', (req, res) => {
 });
 
 
+app.get('/forgetpassword', (req, res) => {
+    res.render('forgetpassword');
+});
 
 app.get('/signup', (req, res) => {
     res.render('signup');
@@ -157,6 +204,7 @@ app.post('/signup', async(req, res) => {
 
 });
 // start here
+
 
 // end here
 
