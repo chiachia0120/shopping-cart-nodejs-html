@@ -29,11 +29,6 @@ app.use((req, res, next) => {
 });
 
 app.use(require(__dirname + '/cart'));
-app.use('/account', require(__dirname + '/account'));
-
-
-
-
 
 
 app.get('/', async(req, res) => {
@@ -111,6 +106,33 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/delete', (req, res) => {
+    res.render('delete');
+});
+
+app.post('/delete', async(req, res) => {
+    const output = {
+        success: false,
+        error: '',
+        code: 0, // 追踪程式走到哪
+        postData: req.body,
+    };
+
+    const sql2 = "DELETE FROM `users` WHERE `account`=?";
+
+    const [result] = await db.query(sql2, [account]);
+
+    // output.result = result;
+    // if (result.affectedRows) {
+    //     if (result.changedRows) {
+    //         output.success = true;
+    //     } else {
+    //         output.error = '資料沒有刪除';
+    //     }
+    // }
+});
+
+
 app.post('/forgetpassword', async(req, res) => {
     const output = {
         success: false,
@@ -161,6 +183,7 @@ app.get('/checkout', (req, res) => {
 app.get('/forgetpassword', (req, res) => {
     res.render('forgetpassword');
 });
+
 
 app.get('/signup', (req, res) => {
     res.render('signup');

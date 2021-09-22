@@ -1,0 +1,49 @@
+<%- include('parts/html-head') %>
+
+    <body class="sub_page d-flex flex-column min-vh-100">
+        <div class="hero_area">
+            <%- include('parts/menu') %>
+        </div>
+
+        <section class="cart_section layout_padding">
+            <div class="container">
+
+                <h5 class="mt-3">不願繼續使用此網站，刪除帳號</h5>
+                <form name="delete_form" onsubmit="checkForm(); return false;">
+                    <div class="pb-5 text-center container">
+                        <div class="card">
+                            <div class="card-body"><i class="h1 font-weight-bold fas fa-cat text-secondary"></i>
+                                <p>註銷帳號</p>
+                            </div>
+                        </div>
+                        <a href="javascript: delete_it">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                </form>
+                </div>
+        </section>
+
+        <%- include('parts/footer') %>
+            <script>
+                const info = $('#info');
+
+
+                function checkForm() {
+                    $.post('', $(document.delete_form).serialize(), function(data) {
+                        if (data.success) {
+                            // 新增成功後回到首頁
+                            setTimeout(function() {
+                                location.href = '/';
+                            }, 3000);
+                        } else {
+                            alert("error");
+                            console.log(data)
+                        }
+                    }, 'json');
+                    return false;
+                }
+            </script>
+            <%- include('parts/html-js') %>
+    </body>
+
+    </html>
